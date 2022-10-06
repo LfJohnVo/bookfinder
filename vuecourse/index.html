@@ -12,16 +12,27 @@
         <div class="row">
             <div class="col mt-4">
                 {{ message }}
+                <br>
+                {{fish }}
             </div>
         </div>
     </div>
     
+    <div id="app2" class="container">
+        <div class="row">
+            <div class="col">
+                {{ message }}
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.40/dist/vue.global.js"></script>
 
     <script>
         let data = {
             message: "Hello vue!",
+            fish: "fish",
         }
 
         const vm = Vue.createApp({
@@ -29,6 +40,17 @@
                 return data
             }
         }).mount("#app")
+
+        let data2 = {
+            message: "Hello vue! 2",
+            fish: "fish",
+        }
+
+        const vm2 = Vue.createApp({
+            data() {
+                return data2
+            }
+        }).mount("#app2")
     </script>
 </body>
 </html>
