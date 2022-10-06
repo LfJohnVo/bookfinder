@@ -22,19 +22,35 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            <div class="col">
+                <h2>{{ counter }}</h2>
+                <hr>
+                <button v-on:click="incrementCounter" class="btn btn-primary">Increment</button>
+                <button v-on:click="decrementCounter" class="btn btn-warning">Decrement</button>
+            </div>
+        </div>
     </div>    
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.40/dist/vue.global.js"></script>
 
     <script>
         let data = {
+            counter: 0,
             message: "Hello vue!",
-            fish: "fish",
         }
 
         const vm = Vue.createApp({
             data() {
                 return data
+            },
+            methods: {
+                incrementCounter() {
+                    this.counter++;
+                },
+                decrementCounter(){
+                    this.counter--;
+                },
             }
         }).mount("#app")
 
