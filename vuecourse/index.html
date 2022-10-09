@@ -1,66 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vue</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-</head>
-<body>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
     <div id="app" class="container">
-        <div class="row">
-            <div class="col mt-4">
-                {{ message }}
-            </div>
+      <div class="row">
+        <div class="col mt-4">{{ message }}</div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="ml-3 mb-3">
+            <label for="message-input" class="form-label">Message</label>
+            <input
+              v-model="message"
+              type="text"
+              class="form-control"
+              id="message-input"
+            />
+          </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <div class="ml-3 mb-3 ">
-                    <label for="message-input" class="form-label">Message</label>
-                    <input v-model="message" type="text" class="form-control" id="message-input" >
-                </div>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h2>{{ counter }}</h2>
+          <hr />
+          <button v-on:click="incrementCounter" class="btn btn-primary">
+            Increment
+          </button>
+          <button v-on:click="decrementCounter" class="btn btn-warning">
+            Decrement
+          </button>
         </div>
-        <div class="row">
-            <div class="col">
-                <h2>{{ counter }}</h2>
-                <hr>
-                <button v-on:click="incrementCounter" class="btn btn-primary">Increment</button>
-                <button v-on:click="decrementCounter" class="btn btn-warning">Decrement</button>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <form class="needs-validation mt-5" novalidate>
+            <text-input required
+              label="first name"
+              type="text"
+              name="first-name"
+            ></text-input>
+            <text-input required
+              label="last name"
+              type="text"
+              name="last-name"
+            ></text-input>
+            <text-input label="email" type="email" name="email" required></text-input>
+            <hr />
+            <input type="submit" class="btn btn-primary" value="Save" />
+          </form>
         </div>
-        <div class="row">
-            <div class="col">
-                <form class="needs-validation mt-5" novalidate>
-                    <text-input label="first name" type="text" name="first-name"></text-input>
-                    <text-input label="last name" type="text" name="last-name"></text-input>
-                    <text-input label="email" type="email" name="email"></text-input>
-                </form>
-            </div>
-        </div>
-    </div>    
+      </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@3.2.40/dist/vue.global.js"></script>
 
     <script>
-        let data = {
-            counter: 0,
-            message: "Hello vue!",
-        }
+      let data = {
+        counter: 0,
+        message: "Hello vue!"
+      };
 
-        const TextInput = {
-            props: {
-                name: String,
-                type: String,
-                label: String,
-                placeholder: String,
-                required: String,
-                min: String,
-                max: String,
-                value: String,
-            },
-            template: `
+      const TextInput = {
+        props: {
+          name: String,
+          type: String,
+          label: String,
+          placeholder: String,
+          required: String,
+          min: String,
+          max: String,
+          value: String
+        },
+        template: `
                 <div class="mb-3">
                     <label :for="name" class="form-label">{{label}}</label>
                     <input
@@ -75,26 +97,57 @@
                     >
                 </div>
             `
+      };
+
+      const vm = Vue.createApp({
+        data() {
+          return data;
+        },
+        methods: {
+          incrementCounter() {
+            this.counter++;
+          },
+          decrementCounter() {
+            this.counter--;
+          }
+        },
+        components: {
+          TextInput
+        },
+        //this function is on mounted lifecicle of vue
+        mounted() {
+          console.log("Mounted");
+          // Example starter JavaScript for disabling form submissions if there are invalid fields
+          (function () {
+            "use strict";
+
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.querySelectorAll(".needs-validation");
+
+            // Loop over them and prevent submission
+            Array.prototype.slice.call(forms).forEach(function (form) {
+              form.addEventListener(
+                "submit",
+                function (event) {
+                  if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                  }
+
+                  form.classList.add("was-validated");
+                },
+                false
+              );
+            });
+          })();
+        },
+        created() {
+          console.log("created");
+        },
+        updated() {
+          console.log("updated");
         }
-
-        const vm = Vue.createApp({
-            data() {
-                return data
-            },
-            methods: {
-                incrementCounter() {
-                    this.counter++;
-                },
-                decrementCounter(){
-                    this.counter--;
-                },
-            },
-            components: {
-                TextInput,
-            }
-        }).mount("#app")
-
-        
+      }).mount("#app");
     </script>
-</body>
+  </body>
 </html>
